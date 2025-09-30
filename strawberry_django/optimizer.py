@@ -589,8 +589,9 @@ def _optimize_prefetch_queryset(
                 connection_type is relay.ListConnection
                 or connection_type is DjangoListConnection
             ):
+                field_info = Info(_raw_info=info, _field=field)
                 slice_metadata = SliceMetadata.from_arguments(
-                    Info(_raw_info=info, _field=field),
+                    field_info,
                     first=field_kwargs.get("first"),
                     last=field_kwargs.get("last"),
                     before=field_kwargs.get("before"),
@@ -599,7 +600,7 @@ def _optimize_prefetch_queryset(
                 # If the expected number of results is the same as the max results,
                 # we want to use -1 to indicate no limit.
                 # Otherwise, we want to use the number of results expected.
-                limit = -1 if slice_metadata.expected == info.schema.config.relay_max_results else slice_metadata.end - slice_metadata.start
+                limit = -1 if slice_metadata.expected == field_info.schema.config.relay_max_results else slice_metadata.end - slice_metadata.start
                 qs = apply_window_pagination(
                     qs,
                     related_field_id=related_field_id,
