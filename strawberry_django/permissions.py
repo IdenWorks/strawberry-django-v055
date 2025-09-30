@@ -143,7 +143,7 @@ def get_with_perms(
     *,
     required: Literal[True],
     model: type[_M],
-    key_attr: str = ...,
+    key_attr: Optional[str] = ...,
 ) -> _M: ...
 
 
@@ -154,7 +154,7 @@ def get_with_perms(
     *,
     required: bool = ...,
     model: type[_M],
-    key_attr: str = ...,
+    key_attr: Optional[str] = ...,
 ) -> Optional[_M]: ...
 
 
@@ -165,7 +165,7 @@ def get_with_perms(
     *,
     required: Literal[True],
     model: type[_M],
-    key_attr: str = ...,
+    key_attr: Optional[str] = ...,
 ) -> _M: ...
 
 
@@ -176,7 +176,7 @@ def get_with_perms(
     *,
     required: bool = ...,
     model: type[_M],
-    key_attr: str = ...,
+    key_attr: Optional[str] = ...,
 ) -> Optional[_M]: ...
 
 
@@ -186,7 +186,7 @@ def get_with_perms(
     info: Info,
     *,
     required: Literal[True],
-    key_attr: str = ...,
+    key_attr: Optional[str] = ...,
 ) -> Any: ...
 
 
@@ -196,7 +196,7 @@ def get_with_perms(
     info: Info,
     *,
     required: bool = ...,
-    key_attr: str = ...,
+    key_attr: Optional[str] = ...,
 ) -> Optional[Any]: ...
 
 
@@ -206,7 +206,7 @@ def get_with_perms(
     *,
     required=False,
     model=None,
-    key_attr="pk",
+    key_attr: Optional[str] = "pk",
 ):
     if isinstance(pk, relay.GlobalID):
         instance = pk.resolve_node_sync(info, required=required, ensure_type=model)

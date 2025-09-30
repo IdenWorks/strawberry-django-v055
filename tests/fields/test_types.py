@@ -387,7 +387,6 @@ def test_geos_fields():
         multi_point: auto
         multi_line_string: auto
         multi_polygon: auto
-        geometry: auto
 
     object_definition = get_object_definition(GeoFieldType, strict=True)
     assert [
@@ -400,7 +399,6 @@ def test_geos_fields():
         ("multi_point", types.MultiPoint),
         ("multi_line_string", types.MultiLineString),
         ("multi_polygon", types.MultiPolygon),
-        ("geometry", types.Geometry),
     ]
 
 

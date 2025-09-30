@@ -133,7 +133,6 @@ try:
         multi_point = geos_fields.MultiPointField(null=True, blank=True)
         multi_line_string = geos_fields.MultiLineStringField(null=True, blank=True)
         multi_polygon = geos_fields.MultiPolygonField(null=True, blank=True)
-        geometry = geos_fields.GeometryField(null=True, blank=True)
 
 except ImproperlyConfigured:
     GEOS_IMPORTED = False
