@@ -261,6 +261,14 @@ def get_total_count(queryset: QuerySet) -> int:
             try:
                 return results[0]._strawberry_total_count
             except AttributeError:
+                warnings.warn(
+                    (
+                        "Pagination annotations not found, falling back to QuerySet resolution. "
+                        "This might cause n+1 issues..."
+                    ),
+                    RuntimeWarning,
+                    stacklevel=2,
+                )
                 queryset = remove_window_pagination(queryset)
                 return queryset.count()
         else:
