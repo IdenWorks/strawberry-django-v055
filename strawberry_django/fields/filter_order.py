@@ -240,7 +240,7 @@ def filter_field(
 
     This is normally used inside a type declaration:
 
-    >>> @strawberry_django.filter_type(SomeModel)
+    >>> @strawberry_django.filter(SomeModel)
     >>> class X:
     >>>     field_abc: strawberry.auto = strawberry_django.filter_field()
 

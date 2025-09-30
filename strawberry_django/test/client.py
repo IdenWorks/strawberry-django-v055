@@ -14,8 +14,6 @@ if TYPE_CHECKING:
 
 
 class TestClient(BaseGraphQLTestClient):
-    __test__ = False
-
     def __init__(self, path: str, client: Optional[Client] = None):
         self.path = path
         super().__init__(client or Client())

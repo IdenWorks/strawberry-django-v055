@@ -282,7 +282,6 @@ except ImproperlyConfigured:
     MultiPoint = None
     MultilineString = None
     MultiPolygon = None
-    Geometry = None
 else:
     Point = strawberry.scalar(
         NewType("Point", tuple[float, float, Optional[float]]),
@@ -345,16 +344,6 @@ else:
         description="A geographical object that contains multiple polygons.",
     )
 
-    Geometry = strawberry.scalar(
-        NewType("Geometry", geos.GEOSGeometry),
-        serialize=lambda v: v.tuple if isinstance(v, geos.GEOSGeometry) else v,  # type: ignore
-        parse_value=lambda v: geos.GeometryCollection,
-        description=(
-            "An arbitrary geographical object. One of Point, "
-            "LineString, LinearRing, Polygon, MultiPoint, MultiLineString, MultiPolygon."
-        ),
-    )
-
     field_type_map.update(
         {
             geos_fields.PointField: Point,
@@ -363,7 +352,6 @@ else:
             geos_fields.MultiPointField: MultiPoint,
             geos_fields.MultiLineStringField: MultiLineString,
             geos_fields.MultiPolygonField: MultiPolygon,
-            geos_fields.GeometryField: Geometry,
         },
     )
 

@@ -4,10 +4,8 @@ import factory
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import Group
-from factory.declarations import Iterator, LazyFunction, Sequence, SubFactory
-from factory.faker import Faker
 
-from .models import Favorite, Issue, Milestone, Project, Quiz, Tag
+from .models import Favorite, Issue, Milestone, Project, Tag
 
 _T = TypeVar("_T")
 User = get_user_model()
@@ -29,7 +27,7 @@ class GroupFactory(_BaseFactory[Group]):
     class Meta:
         model = Group
 
-    name = Sequence(lambda n: f"Group {n}")
+    name = factory.Sequence(lambda n: f"Group {n}")
 
 
 class UserFactory(_BaseFactory["User"]):
@@ -37,11 +35,11 @@ class UserFactory(_BaseFactory["User"]):
         model = User
 
     is_active = True
-    first_name = Faker("first_name")
-    last_name = Faker("last_name")
-    username = Sequence(lambda n: f"user-{n}")
-    email = Faker("email")
-    password = LazyFunction(lambda: make_password("foobar"))
+    first_name = factory.Faker("first_name")
+    last_name = factory.Faker("last_name")
+    username = factory.Sequence(lambda n: f"user-{n}")
+    email = factory.Faker("email")
+    password = factory.LazyFunction(lambda: make_password("foobar"))
 
 
 class StaffUserFactory(UserFactory):
@@ -56,45 +54,38 @@ class ProjectFactory(_BaseFactory[Project]):
     class Meta:
         model = Project
 
-    name = Sequence(lambda n: f"Project {n}")
-    due_date = Faker("future_date")
+    name = factory.Sequence(lambda n: f"Project {n}")
+    due_date = factory.Faker("future_date")
 
 
 class MilestoneFactory(_BaseFactory[Milestone]):
     class Meta:
         model = Milestone
 
-    name = Sequence(lambda n: f"Milestone {n}")
-    due_date = Faker("future_date")
-    project = SubFactory(ProjectFactory)
+    name = factory.Sequence(lambda n: f"Milestone {n}")
+    due_date = factory.Faker("future_date")
+    project = factory.SubFactory(ProjectFactory)
 
 
 class FavoriteFactory(_BaseFactory[Favorite]):
     class Meta:
         model = Favorite
 
-    name = Sequence(lambda n: f"Favorite {n}")
+    name = factory.Sequence(lambda n: f"Favorite {n}")
 
 
 class IssueFactory(_BaseFactory[Issue]):
     class Meta:
         model = Issue
 
-    name = Sequence(lambda n: f"Issue {n}")
-    kind = Iterator(Issue.Kind)
-    milestone = SubFactory(MilestoneFactory)
-    priority = Faker("pyint", min_value=0, max_value=5)
+    name = factory.Sequence(lambda n: f"Issue {n}")
+    kind = factory.Iterator(Issue.Kind)
+    milestone = factory.SubFactory(MilestoneFactory)
+    priority = factory.Faker("pyint", min_value=0, max_value=5)
 
 
 class TagFactory(_BaseFactory[Tag]):
     class Meta:
         model = Tag
 
-    name = Sequence(lambda n: f"Tag {n}")
-
-
-class QuizFactory(_BaseFactory[Quiz]):
-    class Meta:
-        model = Quiz
-
-    title = Sequence(lambda n: f"Quiz {n}")
+    name = factory.Sequence(lambda n: f"Tag {n}")
